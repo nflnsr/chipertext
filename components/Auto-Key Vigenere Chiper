@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Key Vigenère Cipher</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Auto-Key Vigenère Cipher</h1>
+
+    <div>
+        <h2>Enkripsi</h2>
+        <label for="plainText">Teks Asli:</label>
+        <input type="text" id="plainText" placeholder="Masukkan teks asli">
+        <label for="keyEncrypt">Kunci:</label>
+        <input type="text" id="keyEncrypt" placeholder="Masukkan kunci">
+        <button onclick="encrypt()">Enkripsi</button>
+        <p><strong>Teks Sandi:</strong> <span id="encryptedText"></span></p>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Dekripsi</h2>
+        <label for="cipherText">Teks Sandi:</label>
+        <input type="text" id="cipherText" placeholder="Masukkan teks sandi">
+        <label for="keyDecrypt">Kunci:</label>
+        <input type="text" id="keyDecrypt" placeholder="Masukkan kunci">
+        <button onclick="decrypt()">Dekripsi</button>
+        <p><strong>Teks Asli:</strong> <span id="decryptedText"></span></p>
+    </div>
+</div>
+
+<script>
+    // Fungsi untuk membersihkan string (menghapus karakter non-alfabet dan mengubah menjadi huruf besar)
+    function cleanString(str) {
+        return str.toUpperCase().replace(/[^A-Z]/g, '');
+    }
+
+    // Fungsi untuk menghasilkan tabel Vigenère
+    function generateVigenereTable() {
+        let table = [];
+        for (let i = 0; i < 26; i++) {
+            table[i] = [];
+            for (let j = 0; j < 26; j++) {
+                table[i][j] = String.fromCharCode((i + j) % 26 + 65);
+            }
+        }
+        return table;
+    }
+
+    // Fungsi untuk enkripsi menggunakan Auto-Key Vigenère cipher
+    function autoKeyVigenereEncrypt(plainText, key) {
+        plainText = cleanString(plainText);
+        key = cleanString(key);
+        let table = generateVigenereTable();
+        let extendedKey = key + plainText;  // Extend the key with the plain text
+        let cipherText = '';
+
+        for (let i = 0; i < plainText.length; i++) {
+            let row = plainText.charCodeAt(i) - 65;
+            let col = extendedKey.charCodeAt(i) - 65;
+            cipherText += table[row][col];
+        }
+
+        return cipherText;
+    }
+
+    // Fungsi untuk dekripsi menggunakan Auto-Key Vigenère cipher
+    function autoKeyVigenereDecrypt(cipherText, key) {
+        cipherText = cleanString(cipherText);
+        key = cleanString(key);
+        let table = generateVigenereTable();
+        let plainText = '';
+
+        for (let i = 0; i < cipherText.length; i++) {
+            let row = key.charCodeAt(i) - 65;
+            let col = cipherText.charCodeAt(i) - 65;
+            let originalChar = (col - row + 26) % 26;
+            let decryptedChar = String.fromCharCode(originalChar + 65);
+            plainText += decryptedChar;
+            key += decryptedChar;  // Append the decrypted character to the key for the next iteration
+        }
+
+        return plainText;
+    }
+
+    // Fungsi untuk enkripsi dan menampilkan hasilnya di GUI
+    function encrypt() {
+        let plainText = document.getElementById("plainText").value;
+        let key = document.getElementById("keyEncrypt").value;
+        let encryptedText = autoKeyVigenereEncrypt(plainText, key);
+        document.getElementById("encryptedText").innerText = encryptedText;
+    }
+
+    // Fungsi untuk dekripsi dan menampilkan hasilnya di GUI
+    function decrypt() {
+        let cipherText = document.getElementById("cipherText").value;
+        let key = document.getElementById("keyDecrypt").value;
+        let decryptedText = autoKeyVigenereDecrypt(cipherText, key);
+        document.getElementById("decryptedText").innerText = decryptedText;
+    }
+</script>
+
+</body>
+</html>
