@@ -145,6 +145,9 @@ export function playfair(keyword, plaintext) {
     }
   }
 
+  let result = "";
+  encrypted_text.map((val) => (result += val));
   console.log("encrypted", encrypted_text);
-  return encrypted_text;
+  console.log("result", result);
+  return result;
 }

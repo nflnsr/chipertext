@@ -1,66 +1,47 @@
-// Function to perform Affine Cipher encryption
 function affineEncrypt(text, key1, key2) {
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const textLength = text.length;
-  let encryptedText = "";
-
-  for (let i = 0; i < textLength; i++) {
-    const char = text[i];
-    if (char === " ") {
-      encryptedText += " ";
-      continue;
+  let msg = "";
+  for (let i = 0; i < text.length; i++) {
+    if (text[i] !== " ") {
+      let charCode = text[i].charCodeAt(0);
+      if (charCode >= 65 && charCode <= 90) {
+        // Uppercase letters
+        msg += String.fromCharCode(((Number(key1) * (charCode - 65) + Number(key2)) % 26) + 65);
+      } else if (charCode >= 97 && charCode <= 122) {
+        // Lowercase letters
+        msg += String.fromCharCode(((Number(key1) * (charCode - 97) + Number(key2)) % 26) + 97);
+      } else {
+        // Non-alphabetic characters are added directly
+        msg += text[i];
+      }
+    } else {
+      // Preserve spaces
+      msg += text[i];
     }
-
-    const charIndex = alphabet.indexOf(char);
-    if (charIndex === -1) {
-      encryptedText += char;
-      continue;
-    }
-
-    const newIndex = (key1 * charIndex + key2) % 26;
-    encryptedText += alphabet[newIndex];
   }
-  console.log(encryptedText, "encryptttttttt")
-  return encryptedText;
+
+  return msg;
 }
 
-// Function to perform Affine Cipher decryption
 function affineDecrypt(text, key1, key2) {
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  const textLength = text.length;
-  const modInverseA = modInverse(key1, 26); // Calculate the modular inverse of 'a'
+  let msg = "";
+  let a_inv = 0;
+  let flag = 0;
 
-  let decryptedText = "";
+  for (let i = 0; i < 26; i++) {
+    flag = (key1 * i) % 26;
 
-  for (let i = 0; i < textLength; i++) {
-    const char = text[i];
-    if (char === " ") {
-      decryptedText += " ";
-      continue;
-    }
-
-    const charIndex = alphabet.indexOf(char);
-    if (charIndex === -1) {
-      decryptedText += char;
-      continue;
-    }
-
-    const newIndex = (modInverseA * (charIndex - key2 + 26)) % 26;
-    decryptedText += alphabet[newIndex];
-  }
-
-  return decryptedText;
-}
-
-// Function to calculate the modular inverse
-function modInverse(key1, m) {
-  for (let x = 1; x < m; x++) {
-    if ((key1 * x) % m === 1) {
-      return x;
+    if (flag == 1) {
+      a_inv = i;
     }
   }
-  return -1; // Return -1 if modular inverse doesn't exist
+
+  for (let i = 0; i < text?.length; i++) {
+    if (text[i] != " ")
+      msg = msg + String?.fromCharCode(((a_inv * (text[i]?.charCodeAt(0) + 65 - key2)) % 26) + 65);
+    else msg += text[i];
+  }
+
+  return msg;
 }
 
-// Exporting the functions
 export { affineEncrypt, affineDecrypt };
