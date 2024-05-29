@@ -1,9 +1,8 @@
-let plain_text = "attack";
+let plain_text = "mosque";
 let keyword = "monarchy";
 let alphabet = "abcdefghiklmnopqrstuvwxyz"; // j is omitted
-let isEncrypt = true;
+let isEncrypt = false;
 let result = "";
-
 
 // Remove duplicate alphabet with keyword
 let trimmed_alphabet = [];
@@ -84,8 +83,8 @@ for (let i = 0; i < text_index.length; i++) {
       new_col2 = (text_index[i][1][1] + 1) % 5;
     } else {
       // Add - 1 to columns
-      new_col1 = (text_index[i][0][1] - 1) % 5;
-      new_col2 = (text_index[i][1][1] - 1) % 5;
+      new_col1 = (text_index[i][0][1] - 1 + 5) % 5;
+      new_col2 = (text_index[i][1][1] - 1 + 5) % 5;
     }
 
     result +=
@@ -103,8 +102,8 @@ for (let i = 0; i < text_index.length; i++) {
       new_row2 = (text_index[i][1][0] + 1) % 5;
     } else {
       // Add - 1 to rows
-      new_row1 = (text_index[i][0][0] + 1) % 5;
-      new_row2 = (text_index[i][1][0] + 1) % 5;
+      new_row1 = (text_index[i][0][0] - 1 + 5) % 5;
+      new_row2 = (text_index[i][1][0] - 1 + 5) % 5;
     }
 
     result +=
