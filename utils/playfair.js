@@ -1,153 +1,123 @@
-export function playfair(keyword, plaintext) {
-  // let keyword = "monarchy";
-  // let plaintext = "mosque";
-  let alphabet = "abcdefghikmlnopqrstuvwxyz";
-  let diagram_alphabet = [];
-  let encrypted_text = [];
+let plain_text = "attack";
+let keyword = "monarchy";
+let alphabet = "abcdefghiklmnopqrstuvwxyz"; // j is omitted
+let isEncrypt = true;
+let result = "";
 
-  // Create alphabet for diagram alphabet
-  let sliced_alphabet = "";
-  for (let i = 0; i < alphabet.length; i++) {
-    if (!keyword.includes(alphabet[i])) {
-      sliced_alphabet += alphabet[i];
-    }
+
+// Remove duplicate alphabet with keyword
+let trimmed_alphabet = [];
+for (let i = 0; i < alphabet.length; i++) {
+  if (!keyword.includes(alphabet[i])) {
+    trimmed_alphabet += alphabet[i];
   }
-
-  // Add keyword to sliced alphabet
-  diagram_alphabet = keyword + sliced_alphabet;
-  console.log(diagram_alphabet);
-
-  // Slice the diagram alphabet to 5x5 matrix
-  let sliced_diagram_alphabet = [];
-  for (let i = 0; i < alphabet.length; i += 5) {
-    let chunk = diagram_alphabet.substring(i, i + 5);
-    sliced_diagram_alphabet.push(chunk);
-  }
-  console.log(sliced_diagram_alphabet);
-
-  // Make 2x2 matrix from plaintext
-  let sliced_plaintext = [];
-  for (let i = 0; i < plaintext.length; i += 2) {
-    let chunk = plaintext.substring(i, i + 2);
-    sliced_plaintext.push(chunk.split(""));
-  }
-  console.log(sliced_plaintext);
-
-  // Check which row and col for plaintext in diagram alphabet
-  for (let pair_index = 0; pair_index < sliced_plaintext.length; pair_index++) {
-    let pair = sliced_plaintext[pair_index];
-    console.log(pair);
-
-    let row_col_index = [];
-
-    for (let char_index = 0; char_index < pair.length; char_index++) {
-      let char = pair[char_index];
-      console.log("char : ", char);
-
-      for (let row_index = 0; row_index < sliced_diagram_alphabet.length; row_index++) {
-        if (sliced_diagram_alphabet[row_index].includes(char)) {
-          let col_index = sliced_diagram_alphabet[row_index].indexOf(char);
-          row_col_index.push([row_index, col_index]);
-          console.log(
-            `Character '${char}' is at row ${row_index}, column ${col_index} in the diagram alphabet.`
-          );
-        }
-      }
-    }
-
-    if (row_col_index.length > 0) {
-      if (
-        !(
-          row_col_index[0][0] === row_col_index[1][0] || row_col_index[0][1] === row_col_index[1][1]
-        )
-      ) {
-        console.log("initial row col", row_col_index);
-        let col_want_reversed = [];
-        let reversed_row_col_index = [];
-        let new_row_col_index = [];
-        for (let i = 0; i < row_col_index.length; i++) {
-          col_want_reversed.push(row_col_index[i][1]);
-        }
-        console.log("col_want_reversed", col_want_reversed);
-
-        let reversed_col = col_want_reversed.reverse();
-        reversed_row_col_index = reversed_col;
-
-        console.log("reversed_row_col_index", reversed_row_col_index);
-
-        for (let i = 0; i < reversed_row_col_index.length; i++) {
-          row_col_index[i][1] = reversed_row_col_index[i];
-          new_row_col_index.push([row_col_index[i][0], reversed_row_col_index[i]]);
-        }
-
-        console.log("new_row_col_index", new_row_col_index);
-
-        for (let i = 0; i < new_row_col_index.length; i++) {
-          let asda = sliced_diagram_alphabet[new_row_col_index[i][0]][new_row_col_index[i][1]];
-          encrypted_text.push(asda);
-        }
-      } else if (row_col_index[0][0] === row_col_index[1][0]) {
-        console.log("initial row col", row_col_index);
-        let col_want_reversed = [];
-        let reversed_row_col_index = [];
-        let new_row_col_index = [];
-        for (let i = 0; i < row_col_index.length; i++) {
-          col_want_reversed.push(row_col_index[i][1]);
-        }
-        console.log("col_want_reversed", col_want_reversed);
-
-        col_want_reversed[0] = (col_want_reversed[0] + 1) % 5;
-        col_want_reversed[1] = (col_want_reversed[1] + 1) % 5;
-
-        reversed_row_col_index = col_want_reversed;
-
-        console.log("reversed_row_col_index", reversed_row_col_index);
-
-        for (let i = 0; i < reversed_row_col_index.length; i++) {
-          row_col_index[i][1] = reversed_row_col_index[i];
-          new_row_col_index.push([row_col_index[i][0], reversed_row_col_index[i]]);
-        }
-
-        console.log("new_row_col_index", new_row_col_index);
-
-        for (let i = 0; i < new_row_col_index.length; i++) {
-          let asda = sliced_diagram_alphabet[new_row_col_index[i][0]][new_row_col_index[i][1]];
-          encrypted_text.push(asda);
-        }
-      } else if (row_col_index[0][1] === row_col_index[1][1]) {
-        console.log("initial row col", row_col_index);
-        let col_want_reversed = [];
-        let reversed_row_col_index = [];
-        let new_row_col_index = [];
-        for (let i = 0; i < row_col_index.length; i++) {
-          col_want_reversed.push(row_col_index[i][0]);
-        }
-        console.log("col_want_reversed", col_want_reversed);
-
-        col_want_reversed[0] = (col_want_reversed[0] + 1) % 5;
-        col_want_reversed[1] = (col_want_reversed[1] + 1) % 5;
-
-        reversed_row_col_index = col_want_reversed;
-
-        console.log("reversed_row_col_index", reversed_row_col_index);
-
-        for (let i = 0; i < reversed_row_col_index.length; i++) {
-          new_row_col_index.push([reversed_row_col_index[i], row_col_index[i][1]]);
-        }
-
-        console.log("new_row_col_index", new_row_col_index);
-
-        for (let i = 0; i < new_row_col_index.length; i++) {
-          let asda = sliced_diagram_alphabet[new_row_col_index[i][0]][new_row_col_index[i][1]];
-          encrypted_text.push(asda);
-        }
-      }
-    }
-  }
-
-  let result = "";
-  encrypted_text.map((val) => (result += val));
-  console.log("encrypted", encrypted_text);
-  console.log("result", result);
-  return result;
 }
+console.log("trimmed_alphabet : ", trimmed_alphabet);
+
+// Concat keyword with alphabet
+let alphabet_with_keyword = keyword + trimmed_alphabet;
+console.log("alphabet_with_keyword : ", alphabet_with_keyword);
+
+// Create 5x5 matrix alphabet
+let matrix_alphabet = [];
+for (let i = 0; i < alphabet_with_keyword.length; i += 5) {
+  let chunk = alphabet_with_keyword.substring(i, i + 5);
+  matrix_alphabet.push(chunk);
+}
+console.log("matrix_alphabet : ", matrix_alphabet);
+
+// Add 'x' for each duplicate character
+let new_text = "";
+for (let i = 0; i < plain_text.length; i += 2) {
+  let chunk = plain_text.substring(i, i + 2);
+  if (chunk[0] == chunk[1]) {
+    chunk = chunk[0] + "x" + chunk[1];
+  }
+  new_text += chunk;
+}
+
+// Add 'x' if odd
+if (new_text.length % 2 != 0) {
+  new_text += "x";
+}
+console.log("new_text : ", new_text);
+
+// Create 2x2 matrix text
+let text_matrix = [];
+for (let i = 0; i < new_text.length; i += 2) {
+  let chunk = new_text.substring(i, i + 2);
+  text_matrix.push(chunk);
+}
+console.log("text_matrix : ", text_matrix);
+
+// Create text index
+let text_index = [];
+let first_index = [];
+let second_index = [];
+for (let i = 0; i < text_matrix.length; i++) {
+  let first = text_matrix[i][0];
+  let second = text_matrix[i][1];
+
+  // Check if character exist in every alphabet
+  for (let j = 0; j < matrix_alphabet.length; j++) {
+    if (matrix_alphabet[j].indexOf(first) != -1) {
+      first_index = [j, matrix_alphabet[j].indexOf(first)];
+    }
+    if (matrix_alphabet[j].indexOf(second) != -1) {
+      second_index = [j, matrix_alphabet[j].indexOf(second)];
+    }
+  }
+  text_index.push([first_index, second_index]);
+}
+console.log("text_index : ", text_index);
+
+// Check every index for encryption
+for (let i = 0; i < text_index.length; i++) {
+  // If same row
+  if (text_index[i][0][0] == text_index[i][1][0]) {
+    let new_col1 = 0;
+    let new_col2 = 0;
+
+    if (isEncrypt) {
+      // Add + 1 to columns
+      new_col1 = (text_index[i][0][1] + 1) % 5;
+      new_col2 = (text_index[i][1][1] + 1) % 5;
+    } else {
+      // Add - 1 to columns
+      new_col1 = (text_index[i][0][1] - 1) % 5;
+      new_col2 = (text_index[i][1][1] - 1) % 5;
+    }
+
+    result +=
+      matrix_alphabet[text_index[i][0][0]].charAt(new_col1) +
+      matrix_alphabet[text_index[i][0][0]].charAt(new_col2);
+  }
+  // If same column
+  else if (text_index[i][0][1] == text_index[i][1][1]) {
+    let new_row1 = 0;
+    let new_row2 = 0;
+
+    if (isEncrypt) {
+      // Add + 1 to rows
+      new_row1 = (text_index[i][0][0] + 1) % 5;
+      new_row2 = (text_index[i][1][0] + 1) % 5;
+    } else {
+      // Add - 1 to rows
+      new_row1 = (text_index[i][0][0] + 1) % 5;
+      new_row2 = (text_index[i][1][0] + 1) % 5;
+    }
+
+    result +=
+      matrix_alphabet[new_row1].charAt(text_index[i][0][1]) +
+      matrix_alphabet[new_row2].charAt(text_index[i][0][1]);
+  }
+  // If rectangle
+  else {
+    // Swap index
+    result +=
+      matrix_alphabet[text_index[i][0][0]].charAt(text_index[i][1][1]) +
+      matrix_alphabet[text_index[i][1][0]].charAt(text_index[i][0][1]);
+  }
+}
+
+console.log(result);
