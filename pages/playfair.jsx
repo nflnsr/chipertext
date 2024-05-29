@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 function Playfair() {
   const [result, setResult] = useState("");
   const [text, setText] = useState("");
-  const [key, setKey] = useState(0);
+  const [key, setKey] = useState("");
 
   const navigate = useNavigate();
 
@@ -38,7 +38,7 @@ function Playfair() {
             placeholder="text"
           />
           <input
-            type="number"
+            type="text"
             value={key}
             onChange={(e) => setKey(e.target?.value)}
             className="w-full px-1 ring-1 ring-slate-400"
