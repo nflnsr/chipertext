@@ -113,3 +113,5 @@ function playfairCipher(plain_text, keyword, isEncrypt) {
 
     return result;
 }
+
+export { playfairCipher };

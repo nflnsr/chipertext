@@ -11,18 +11,18 @@ function Affine() {
   const navigate = useNavigate();
 
   const handleEncrypt = () => {
-    const encrypt = affineEncrypt(text.toUpperCase(), key1, key2);
-    setResult(encrypt);
+    const result = affineEncrypt(text.toUpperCase(), key1, key2);
+    setResult(result);
   };
 
   const handleDecrypt = () => {
-    const decrypt = affineDecrypt(text.toUpperCase(), key1, key2);
-    setResult(decrypt);
+    const result = affineDecrypt(text.toUpperCase(), key1, key2);
+    setResult(result);
   };
 
   return (
     <>
-      <main className="h-screen">
+      <main className="h-[calc(100svh)]">
         <button
           onClick={() => navigate(-1)}
           className="px-4 pb-0.5 bg-gray-300 rounded-md hover:bg-gray-200"
@@ -30,7 +30,7 @@ function Affine() {
           back
         </button>
         <div className="absolute w-56 space-y-3 text-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-          <h1 className="text-lg font-semibold text-gray-700 underline">Affine Chiper</h1>
+          <h1 className="text-lg font-semibold text-gray-700 underline">Affine Cipher</h1>
           <input
             type="text"
             value={text}
