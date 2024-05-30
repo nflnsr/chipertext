@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { caesarEncrypt, caesarDecrypt } from "../utils/caesar";
 import { useNavigate } from "react-router-dom";
+import { extendedVigenereEncrypt, extendedVigenereDecrypt } from "../utils/extendedVigenere";
 
 function ExtendedVigenere() {
   const [result, setResult] = useState("");
@@ -10,12 +10,12 @@ function ExtendedVigenere() {
   const navigate = useNavigate();
 
   const handleEncrypt = () => {
-    const result = caesarEncrypt(text.toUpperCase(), key);
+    const result = extendedVigenereEncrypt(text, key);
     setResult(result);
   };
 
   const handleDecrypt = () => {
-    const result = caesarDecrypt(text.toUpperCase(), key);
+    const result = extendedVigenereDecrypt(text, key);
     setResult(result);
   };
 
