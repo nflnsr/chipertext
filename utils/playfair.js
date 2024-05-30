@@ -80,8 +80,8 @@ function playfairCipher(plain_text, keyword, isEncrypt) {
             }
 
             result +=
-                matrix_alphabet[text_index[i][0][0]].charAt(new_col1) +
-                matrix_alphabet[text_index[i][0][0]].charAt(new_col2);
+                matrix_alphabet[text_index[i][0][0]]?.charAt(new_col1) +
+                matrix_alphabet[text_index[i][0][0]]?.charAt(new_col2);
         }
         // If same column
         else if (text_index[i][0][1] == text_index[i][1][1]) {
@@ -99,15 +99,15 @@ function playfairCipher(plain_text, keyword, isEncrypt) {
             }
 
             result +=
-                matrix_alphabet[new_row1].charAt(text_index[i][0][1]) +
-                matrix_alphabet[new_row2].charAt(text_index[i][0][1]);
+                matrix_alphabet[new_row1]?.charAt(text_index[i][0][1]) +
+                matrix_alphabet[new_row2]?.charAt(text_index[i][0][1]);
         }
         // If rectangle
         else {
             // Swap index
             result +=
-                matrix_alphabet[text_index[i][0][0]].charAt(text_index[i][1][1]) +
-                matrix_alphabet[text_index[i][1][0]].charAt(text_index[i][0][1]);
+                matrix_alphabet[text_index[i][0][0]]?.charAt(text_index[i][1][1]) +
+                matrix_alphabet[text_index[i][1][0]]?.charAt(text_index[i][0][1]);
         }
     }
 

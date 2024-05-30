@@ -10,13 +10,13 @@ function Playfair() {
   const navigate = useNavigate();
 
   const handleEncrypt = () => {
-    const result = playfairCipher(text.toUpperCase(), key, true);
-    setResult(result);
+    const result = playfairCipher(text, key, true);
+    setResult(result.toUpperCase());
   };
 
   const handleDecrypt = () => {
-    const result = playfairCipher(text.toUpperCase(), key, false);
-    setResult(result);
+    const result = playfairCipher(text, key, false);
+    setResult(result.toUpperCase());
   };
 
   return (
