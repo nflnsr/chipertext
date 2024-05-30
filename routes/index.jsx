@@ -7,6 +7,7 @@ import { ExtendedVigenere } from "../pages/extended-vigenere";
 import { Playfair } from "../pages/playfair";
 import { VariantVigenere } from "../pages/variant-vigenere";
 import { Vigenere } from "../pages/vigenere";
+import { Member } from "../pages/member";
 
 function Index() {
   return (
@@ -18,6 +19,7 @@ function Index() {
       <Route path="/vignere" element={<Vigenere />} />
       <Route path="/variant-vignere" element={<VariantVigenere />} />
       <Route path="/extended-vignere" element={<ExtendedVigenere />} />
+      <Route path="/member" element={<Member />} />
     </Routes>
   );
 }
