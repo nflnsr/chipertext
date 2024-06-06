@@ -16,7 +16,7 @@ function Index() {
       <Route path="/caesar" element={<Caesar />} />
       <Route path="/affine" element={<Affine />} />
       <Route path="/playfair" element={<Playfair />} />
-      <Route path="/vignere" element={<Vigenere />} />
+      <Route path="/vigenere" element={<Vigenere />} />
       <Route path="/variant-vignere" element={<VariantVigenere />} />
       <Route path="/extended-vignere" element={<ExtendedVigenere />} />
       <Route path="/member" element={<Member />} />

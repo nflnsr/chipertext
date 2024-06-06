@@ -7,16 +7,16 @@ function Home() {
         <h1 className="text-lg font-semibold underline hover:text-red-500 hover:no-underline">
           Cipher Text
         </h1>
-        <Link to="/affine" className="hover:underline hover:text-blue-400">
-          Affine
-        </Link>
         <Link to="/caesar" className="hover:underline hover:text-blue-400">
           Caesar
+        </Link>
+        <Link to="/affine" className="hover:underline hover:text-blue-400">
+          Affine
         </Link>
         <Link to="/playfair" className="hover:underline hover:text-blue-400">
           Playfair
         </Link>
-        <Link to="/vignere" className="hover:underline hover:text-blue-400">
+        <Link to="/vigenere" className="hover:underline hover:text-blue-400">
           Vigenere
         </Link>
         <Link to="/extended-vignere" className="hover:underline hover:text-blue-400">
